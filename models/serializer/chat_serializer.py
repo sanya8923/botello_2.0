@@ -1,5 +1,5 @@
 from serializer import Serializer
-from models.objects.chat import Chat, PublicChat
+from models.objects.chat import Chat, PublicChat, PrivateChat
 from other import print_name_method
 
 
@@ -11,7 +11,8 @@ class ChatSerializer(Serializer):
 
 
 class PrivateChatSerializer(ChatSerializer):
-    pass
+    def __init__(self, chat: PrivateChat):
+        super().__init__(chat)
 
 
 class PublicChatSerializer(ChatSerializer):

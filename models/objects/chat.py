@@ -8,6 +8,10 @@ class Chat(Object):
         self.id: int = message.chat.id
 
 
+class PrivateChat(Chat):
+    pass
+
+
 class PublicChat(Chat):
     def __init__(self, message: Message):
         super().__init__()
@@ -22,6 +26,3 @@ class Group(PublicChat):
 class SuperGroup(PublicChat):
     pass
 
-
-class PrivateChat(Group):
-    pass
