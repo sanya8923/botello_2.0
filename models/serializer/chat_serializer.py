@@ -1,5 +1,5 @@
 from serializer import Serializer
-from models.chat import Chat, PublicChat
+from models.objects.chat import Chat, PublicChat
 from other import print_name_method
 
 

@@ -1,5 +1,4 @@
-from typing import Optional
-from models.object import Object
+from models.objects.object import Object
 from aiogram.types import Message
 
 

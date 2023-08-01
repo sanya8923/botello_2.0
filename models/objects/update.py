@@ -1,7 +1,7 @@
 from typing import Optional, List, Union
-from models.object import Object
-from models.user import User
-from models.chat import Chat
+from models.objects.object import Object
+from models.objects.user import User
+from models.objects.chat import Chat
 from aiogram.types import Message, MessageEntity, CallbackQuery
 
 

@@ -1,4 +1,4 @@
-from models.object import Object
+from models.objects.object import Object
 from abc import ABC, abstractmethod
 
 
