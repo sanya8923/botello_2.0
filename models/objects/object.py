@@ -1,7 +1,3 @@
-from typing import Optional
-from abc import ABC, abstractmethod
-
-
-class Object(ABC):
+class Object:
     def __init__(self):
-        self.id: Optional[int] = None
+        self.object = None
