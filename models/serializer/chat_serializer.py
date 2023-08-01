@@ -6,8 +6,7 @@ from other import print_name_method
 class ChatSerializer(Serializer):
     def __init__(self, chat: Chat):
         super().__init__(chat)
-        self.chat = chat
-        self.id = chat.id
+        self.chat_id = chat.id
 
     async def to_json(self):  # abstract method
         pass
@@ -20,6 +19,7 @@ class PrivateChatSerializer(ChatSerializer):
     @print_name_method
     def __init__(self, chat: PrivateChat):
         super().__init__(chat)
+        self.chat_type: str = 'private'
 
     @print_name_method
     async def to_json(self):  # TODO: add method
@@ -50,9 +50,11 @@ class GroupSerializer(PublicChatSerializer):
     @print_name_method
     def __init__(self, chat: Group):
         super().__init__(chat)
+        self.chat_type: str = 'group'
 
 
 class SuperGroupSerializer(PublicChatSerializer):
     def __init__(self, chat: SuperGroup):
         super().__init__(chat)
+        self.chat_type: str = 'supergroup'
 
