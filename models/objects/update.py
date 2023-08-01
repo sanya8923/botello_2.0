@@ -28,7 +28,8 @@ class MessagePrivateChat(MessageData):
 
 
 class MessagePublicChat(MessageData):
-    pass
+    def __init__(self, message: Message):
+        super().__init__(message)
 
 
 class Callback(Update):
