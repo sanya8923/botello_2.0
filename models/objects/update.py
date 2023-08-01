@@ -8,15 +8,16 @@ from aiogram.types import Message, MessageEntity, CallbackQuery
 class Update(Object):
     def __init__(self, update: Union[Message, CallbackQuery]):
         super().__init__()
-        self.id: int = update.message.message_id
-        self.from_user: User = User(update)
-        self.from_chat: Chat = Chat(update)
+        self.update: Union[Message, CallbackQuery] = update
 
 
 class MessageData(Update):
     def __init__(self, message: Message):
         super().__init__(message)
         self.message_data: Message = message
+        self.id: int = message.message_id
+        self.from_user: User = User(message)
+        self.from_chat: Chat = Chat(message)
         self.text: str = message.text
         self.entities_data: Optional[List[MessageEntity]] = message.entities
 
