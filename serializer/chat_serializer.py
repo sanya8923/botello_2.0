@@ -1,6 +1,6 @@
 from serializer import Serializer
 from models.chat import Chat, PublicChat
-from other import name_method
+from other import print_name_method
 
 
 class ChatSerializer(Serializer):
@@ -10,16 +10,20 @@ class ChatSerializer(Serializer):
         self.id = chat.id
 
 
+class PrivateChatSerializer(ChatSerializer):
+    pass
+
+
 class PublicChatSerializer(ChatSerializer):
     def __init__(self, chat: PublicChat):
         super().__init__(chat)
         self.username = chat.username
         self.title = chat.title
 
-    @name_method
+    @print_name_method
     async def to_json(self):
         pass
 
-    @name_method
+    @print_name_method
     async def from_json(self):
         pass
