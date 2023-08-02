@@ -30,7 +30,7 @@ async def on_new_message_from_creator_group(message: Message):
     member_serializer = CreatorSerializer(creator)
     await member_serializer.to_json()
     group_serializer = GroupSerializer(group)
-    await group_serializer.to_json()
+    dict_chat = await group_serializer.to_json()
 
 
 @router.message(UserRoleFilter(user_role='administrator'))
