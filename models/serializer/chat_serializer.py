@@ -1,7 +1,6 @@
 from models.serializer.serializer import Serializer
 from models.objects.chat import Chat, PublicChat, PrivateChat, Group, SuperGroup
 from colorama import init, Fore
-import json
 
 init(autoreset=True)
 
@@ -18,6 +17,9 @@ class ChatSerializer(Serializer):
 
         data = {'id': self.chat_id}
 
+        file = 'jsons/chat.json'
+        await self.add_to_json(file, data)
+
         return data
 
     async def from_json(self):  # TODO: add method
@@ -33,10 +35,13 @@ class PrivateChatSerializer(ChatSerializer):
         self.chat_type: str = 'private'
 
     async def to_json(self):  # TODO: refactor method
-        print(Fore.LIGHTYELLOW_EX + f'{self.from_json.__name__} in class {self.__class__.__name__}')
+        print(Fore.LIGHTYELLOW_EX + f'{self.to_json().__name__} in class {self.__class__.__name__}')
 
         data = await super().to_json()
         data['type'] = self.chat_type
+
+        file = 'jsons/chat.json'
+        await self.add_to_json(file, data)
 
         return data
 
@@ -60,6 +65,9 @@ class PublicChatSerializer(ChatSerializer):
         data['username'] = self.username
         data['title'] = self.title
 
+        file = 'jsons/chat.json'
+        await self.add_to_json(file, data)
+
         return data
 
     async def from_json(self):  # TODO: add method
@@ -80,6 +88,9 @@ class GroupSerializer(PublicChatSerializer):
         data = await super().to_json()
         data['type'] = self.chat_type
 
+        file = 'jsons/chat.json'
+        await self.add_to_json(file, data)
+
         return data
 
     async def from_json(self):  # TODO: add method
@@ -98,6 +109,9 @@ class SuperGroupSerializer(PublicChatSerializer):
 
         data = await super().to_json()
         data['type'] = self.chat_type
+
+        file = 'jsons/chat.json'
+        await self.add_to_json(file, data)
 
         return data
 
