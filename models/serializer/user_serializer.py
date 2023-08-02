@@ -18,7 +18,7 @@ class UserSerializer(Serializer):
         self.user_status: Optional[str] = None
         self.file: str = 'jsons/user.json'
 
-    async def to_json(self):  # TODO: refactor method
+    async def to_json(self):
         print(Fore.LIGHTYELLOW_EX + f'{self.to_json.__name__} in class {self.__class__.__name__}')
 
         data = {
