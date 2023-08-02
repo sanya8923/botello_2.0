@@ -10,9 +10,9 @@ class ChatSerializer(Serializer):
         super().__init__(chat)
         print(Fore.BLUE + f'{self.__class__.__name__}')
 
-        self.chat_id = chat.id
+        self.chat_id: int = chat.id
 
-    async def to_json(self):  # TODO: refactor method
+    async def to_json(self):
         print(Fore.LIGHTYELLOW_EX + f'{self.to_json.__name__} in class {self.__class__.__name__}')
 
         data = {'id': self.chat_id}
@@ -29,7 +29,7 @@ class PrivateChatSerializer(ChatSerializer):
         super().__init__(chat)
         print(Fore.BLUE + f'{self.__class__.__name__}')
 
-        self.file = 'jsons/private_chat.json'
+        self.file: str = 'jsons/private_chat.json'
         self.chat_type: str = 'private'
 
     async def to_json(self):
@@ -51,9 +51,9 @@ class PublicChatSerializer(ChatSerializer):
         super().__init__(chat)
         print(Fore.BLUE + f'{self.__class__.__name__}')
 
-        self.username = chat.username
-        self.title = chat.title
-        self.file = 'jsons/public_chat.json'
+        self.username: int = chat.username
+        self.title: str = chat.title
+        self.file: str = 'jsons/public_chat.json'
 
     async def to_json(self):
         print(Fore.LIGHTYELLOW_EX + f'{self.to_json.__name__} in class {self.__class__.__name__}')
@@ -77,7 +77,7 @@ class GroupSerializer(PublicChatSerializer):
 
         self.chat_type: str = 'group'
 
-    async def to_json(self):  # TODO: refactor method
+    async def to_json(self):
         print(Fore.LIGHTYELLOW_EX + f'{self.to_json.__name__} in class {self.__class__.__name__}')
 
         data = await super().to_json()
@@ -95,9 +95,10 @@ class SuperGroupSerializer(PublicChatSerializer):
     def __init__(self, chat: SuperGroup):
         super().__init__(chat)
         print(Fore.BLUE + f'{self.__class__.__name__}')
+
         self.chat_type: str = 'supergroup'
 
-    async def to_json(self):  # TODO: refactor method
+    async def to_json(self):
         print(Fore.LIGHTYELLOW_EX + f'{self.to_json.__name__} in class {self.__class__.__name__}')
 
         data = await super().to_json()
