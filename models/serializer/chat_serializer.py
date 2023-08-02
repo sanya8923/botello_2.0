@@ -13,7 +13,7 @@ class ChatSerializer(Serializer):
         self.chat_id = chat.id
 
     async def to_json(self):  # TODO: refactor method
-        print(Fore.LIGHTYELLOW_EX + f'{self.from_json.__name__} in class {self.__class__.__name__}')
+        print(Fore.LIGHTYELLOW_EX + f'{self.to_json.__name__} in class {self.__class__.__name__}')
 
         data = {'id': self.chat_id}
 
