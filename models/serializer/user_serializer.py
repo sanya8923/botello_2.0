@@ -17,7 +17,7 @@ class UserSerializer(Serializer):
         self.user_status: Optional[str] = None
 
     async def to_json(self):  # TODO: add method
-        print(Fore.LIGHTYELLOW_EX + f'{self.from_json.__name__} in class {self.__class__.__name__}')
+        print(Fore.LIGHTYELLOW_EX + f'{self.to_json.__name__} in class {self.__class__.__name__}')
         pass
 
     async def from_json(self):  # TODO: add method

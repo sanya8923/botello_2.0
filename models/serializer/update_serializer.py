@@ -38,7 +38,7 @@ class MessagePrivateChatSerializer(MessageDataSerializer):
         print(Fore.BLUE + f'{self.__class__.__name__}')
 
     async def to_json(self):  # TODO: add method
-        print(Fore.LIGHTYELLOW_EX + f'{self.from_json.__name__} in class {self.__class__.__name__}')
+        print(Fore.LIGHTYELLOW_EX + f'{self.to_json.__name__} in class {self.__class__.__name__}')
         pass
 
     async def from_json(self):  # TODO: add method
@@ -52,7 +52,7 @@ class MessagePublicChatSerializer(MessageDataSerializer):
         print(Fore.BLUE + f'{self.__class__.__name__}')
 
     async def to_json(self):  # TODO: add method
-        print(Fore.LIGHTYELLOW_EX + f'{self.from_json.__name__} in class {self.__class__.__name__}')
+        print(Fore.LIGHTYELLOW_EX + f'{self.to_json.__name__} in class {self.__class__.__name__}')
         pass
 
     async def from_json(self):  # TODO: add method
@@ -67,7 +67,7 @@ class CallbackSerializer(UpdateSerializer):
         self.callback_data: str = callback.callback_data
 
     async def to_json(self):  # TODO: add method
-        print(Fore.LIGHTYELLOW_EX + f'{self.from_json.__name__} in class {self.__class__.__name__}')
+        print(Fore.LIGHTYELLOW_EX + f'{self.to_json.__name__} in class {self.__class__.__name__}')
         pass
 
     async def from_json(self):  # TODO: add method
