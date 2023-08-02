@@ -10,20 +10,26 @@ class UserSerializer(Serializer):
     def __init__(self, user: User):
         super().__init__(user)
         print(Fore.BLUE + f'{self.__class__.__name__}')
+
         self.user_id: int = user.id
         self.username: str = user.username
         self.user_first_name: str = user.first_name
         self.user_last_name: str = user.last_name
         self.user_status: Optional[str] = None
+        self.file: str = 'jsons/user.json'
 
     async def to_json(self):  # TODO: refactor method
         print(Fore.LIGHTYELLOW_EX + f'{self.to_json.__name__} in class {self.__class__.__name__}')
+
         data = {
             'id': self.user_id,
             'username': self.username,
             'first_name': self.user_first_name,
             'last_name': self.user_last_name
         }
+
+        await self.add_to_json(self.file, data)
+
         return data
 
     async def from_json(self):  # TODO: add method
