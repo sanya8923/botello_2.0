@@ -24,7 +24,7 @@ class PrivateChatSerializer(ChatSerializer):
         print(Fore.BLUE + f'{self.__class__.__name__}')
         self.chat_type: str = 'private'
 
-    async def to_json(self):  # TODO: add method
+    async def to_json(self):
         print(Fore.LIGHTYELLOW_EX + f'{self.from_json.__name__} in class {self.__class__.__name__}')
         data = {
             'id': self.chat_id,
@@ -43,8 +43,9 @@ class PublicChatSerializer(ChatSerializer):
         print(Fore.BLUE + f'{self.__class__.__name__}')
         self.username = chat.username
         self.title = chat.title
+        self.chat_type = None
 
-    async def to_json(self):  # TODO: add method
+    async def to_json(self):
         print(Fore.LIGHTYELLOW_EX + f'{self.to_json.__name__} in class {self.__class__.__name__}')
         pass
 
