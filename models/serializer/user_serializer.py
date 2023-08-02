@@ -16,12 +16,12 @@ class UserSerializer(Serializer):
         self.user_last_name: str = user.last_name
         self.user_status: Optional[str] = None
 
-    async def to_json(self):  # TODO: add method
+    async def to_json(self):  # TODO: refactor method
         print(Fore.LIGHTYELLOW_EX + f'{self.to_json.__name__} in class {self.__class__.__name__}')
         data = {
             'id': self.user_id,
             'username': self.username,
-            'first_name': self.user_first_name
+            'first_name': self.user_first_name,
             'last_name': self.user_last_name
         }
         return data
