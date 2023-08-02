@@ -18,7 +18,13 @@ class UserSerializer(Serializer):
 
     async def to_json(self):  # TODO: add method
         print(Fore.LIGHTYELLOW_EX + f'{self.to_json.__name__} in class {self.__class__.__name__}')
-        pass
+        data = {
+            'id': self.user_id,
+            'username': self.username,
+            'first_name': self.user_first_name
+            'last_name': self.user_last_name
+        }
+        return data
 
     async def from_json(self):  # TODO: add method
         print(Fore.LIGHTYELLOW_EX + f'{self.from_json.__name__} in class {self.__class__.__name__}')
