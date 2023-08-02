@@ -10,14 +10,12 @@ class ChatSerializer(Serializer):
         super().__init__(chat)
         print(Fore.BLUE + f'{self.__class__.__name__}')
 
-        self.file = 'jsons/chat.json'
         self.chat_id = chat.id
 
     async def to_json(self):  # TODO: refactor method
         print(Fore.LIGHTYELLOW_EX + f'{self.to_json.__name__} in class {self.__class__.__name__}')
 
         data = {'id': self.chat_id}
-        await self.add_to_json(self.file, data)
 
         return data
 
@@ -31,9 +29,10 @@ class PrivateChatSerializer(ChatSerializer):
         super().__init__(chat)
         print(Fore.BLUE + f'{self.__class__.__name__}')
 
+        self.file = 'jsons/private_chat.json'
         self.chat_type: str = 'private'
 
-    async def to_json(self):  # TODO: refactor method
+    async def to_json(self):
         print(Fore.LIGHTYELLOW_EX + f'{self.to_json().__name__} in class {self.__class__.__name__}')
 
         data = await super().to_json()
@@ -54,8 +53,9 @@ class PublicChatSerializer(ChatSerializer):
 
         self.username = chat.username
         self.title = chat.title
+        self.file = 'jsons/public_chat.json'
 
-    async def to_json(self):  # TODO: refactor method
+    async def to_json(self):
         print(Fore.LIGHTYELLOW_EX + f'{self.to_json.__name__} in class {self.__class__.__name__}')
 
         data = await super().to_json()
