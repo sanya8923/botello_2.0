@@ -24,19 +24,19 @@ init(autoreset=True)
 @router.message(UserRoleFilter(user_role='creator'))
 async def on_new_message_from_creator_group(message: Message):
     print(Fore.BLUE + 'on_new_message_from_creator_group')
-    message_data = MessagePublicChat()
-    creator = Creator()
-    group = Group()
+    message_data = MessagePublicChat(message)
+    creator = Creator(message)
+    group = Group(message)
 
     message_serializer = MessagePublicChatSerializer()
-    user_serializer = CreatorSerializer()
+    creator_serializer = CreatorSerializer()
     group_serializer = GroupSerializer()
     group_member_role_serializer = GroupMemberRoleSerializer()
 
-    await message_serializer.to_json(message)  # return dict with message data and save json
-    await user_serializer.to_json(message)  # return dict with member data and save json
-    await group_serializer.to_json(message)  # return dict with group data and save json
-    await group_member_role_serializer.to_json(message)  # return dict with group_id, user_id and role and save json
+    await message_serializer.to_json(message_data)  # return dict with message data and save json
+    await creator_serializer.to_json(creator)  # return dict with member data and save json
+    await group_serializer.to_json(group)  # return dict with group data and save json
+    await group_member_role_serializer.to_json(message_data)  # return dict with group_id, user_id and role and save json
 
 
 @router.message(UserRoleFilter(user_role='administrator'))
