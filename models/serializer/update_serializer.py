@@ -11,7 +11,7 @@ class UpdateSerializer(Serializer):
     def __init__(self):
         print(Fore.BLUE + f'{self.__class__.__name__}')
 
-    async def to_json(self, update: UpdateData):  # abstract method
+    async def to_json(self, update: UpdateData) -> dict:  # abstract method
         pass
 
     async def from_json(self):  # abstract method
@@ -32,7 +32,7 @@ class MessageDataSerializer(UpdateSerializer):
         self.from_chat: Optional[int] = None
         self.file: str = 'jsons/message.json'
 
-    async def to_json(self, update: MessageData):
+    async def to_json(self, update: MessageData) -> dict:
         print(Fore.LIGHTYELLOW_EX + f'{self.to_json.__name__} in class {self.__class__.__name__}')
         self.id = update.id
         self.message_text = update.text

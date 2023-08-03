@@ -1,9 +1,6 @@
 from models.serializer.serializer import Serializer
 from typing import Optional
-from aiogram.types import Message
 from bot import bot
-from models.objects.chat import Group, SuperGroup, Chat
-from models.objects.user import Admin, Member, Creator, User
 from models.objects.update import MessageData
 from colorama import init, Fore
 
@@ -19,7 +16,7 @@ class GroupMemberRoleSerializer(Serializer):
         self.role: Optional[str] = None
         self.file: str = 'jsons/group_member_role.json'
 
-    async def to_json(self, update_data: MessageData):
+    async def to_json(self, update_data: MessageData) -> dict:
         print(Fore.LIGHTYELLOW_EX + f'{self.to_json.__name__} in class {self.__class__.__name__}')
 
         self.user_id = update_data.from_user.id

@@ -13,7 +13,7 @@ class ChatSerializer(Serializer):
 
         self.chat_id: Optional[int] = None
 
-    async def to_json(self, chat: Chat):
+    async def to_json(self, chat: Chat) -> dict:
         print(Fore.LIGHTYELLOW_EX + f'{self.to_json.__name__} in class {self.__class__.__name__}')
 
         self.chat_id = chat.id
@@ -37,7 +37,7 @@ class PrivateChatSerializer(ChatSerializer):
         self.file: str = 'jsons/private_chat.json'
         self.chat_type: str = 'private'
 
-    async def to_json(self, chat: PrivateChat):
+    async def to_json(self, chat: PrivateChat) -> dict:
         print(Fore.LIGHTYELLOW_EX + f'{self.to_json.__name__} in class {self.__class__.__name__}')
 
         data = await super().to_json(chat)
@@ -63,7 +63,7 @@ class PublicChatSerializer(ChatSerializer):
         self.title: Optional[str] = None
         self.file: str = 'jsons/public_chat.json'
 
-    async def to_json(self, chat: PublicChat):
+    async def to_json(self, chat: PublicChat) -> dict:
         print(Fore.LIGHTYELLOW_EX + f'{self.to_json.__name__} in class {self.__class__.__name__}')
 
         data = await super().to_json(chat)

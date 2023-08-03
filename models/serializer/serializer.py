@@ -11,7 +11,7 @@ init(autoreset=True)
 
 class Serializer(ABC):
     @abstractmethod
-    async def to_json(self, obj: Union[User, Chat, UpdateData]):
+    async def to_json(self, obj: Union[User, Chat, UpdateData]) -> dict:
         pass
 
     @abstractmethod

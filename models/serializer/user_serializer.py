@@ -17,7 +17,7 @@ class UserSerializer(Serializer):
         self.user_last_name: Optional[str] = None
         self.file: str = 'jsons/user.json'
 
-    async def to_json(self, user: User):
+    async def to_json(self, user: User) -> dict:
         print(Fore.LIGHTYELLOW_EX + f'{self.to_json.__name__} in class {self.__class__.__name__}')
 
         self.user_id = user.id

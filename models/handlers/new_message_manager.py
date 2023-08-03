@@ -37,10 +37,14 @@ class NewMessageManager(ABC):
         self.group_member_role_dict: Optional[dict] = None
 
     @abstractmethod
-    async def serialize(self):
+    async def serialize(self) -> None:
         pass
 
-    async def _serialize_process(self):
+    @abstractmethod
+    async def add_to_db(self):
+        pass
+
+    async def _serialize_process(self) -> None:
         print(Fore.LIGHTYELLOW_EX + f'{self._serialize_process.__name__} in class {self.__class__.__name__}')
 
         self.message_data_dict = await self._message_serializer.to_json(
@@ -62,7 +66,7 @@ class NewMessageFromCreatorManager(NewMessageManager):
         self.user = Creator(self._message)
         self.group = Group(self._message)
 
-    async def serialize(self):
+    async def serialize(self) -> None:
         print(Fore.LIGHTYELLOW_EX + f'{self.serialize.__name__} in class {self.__class__.__name__}')
 
         self._message_serializer = MessagePublicChatSerializer()
@@ -71,6 +75,9 @@ class NewMessageFromCreatorManager(NewMessageManager):
         self._group_member_role_serializer = GroupMemberRoleSerializer()
 
         await self._serialize_process()
+
+    async def add_to_db(self):  # TODO: add method
+        print(Fore.LIGHTYELLOW_EX + f'{self.serialize.__name__} in class {self.__class__.__name__}')
 
 
 class NewMessageFromAdminManager(NewMessageManager):
@@ -82,7 +89,7 @@ class NewMessageFromAdminManager(NewMessageManager):
         self.user = Admin(self._message)
         self.group = Group(self._message)
 
-    async def serialize(self):
+    async def serialize(self) -> None:
         print(Fore.LIGHTYELLOW_EX + f'{self.serialize.__name__} in class {self.__class__.__name__}')
 
         self._message_serializer = MessagePublicChatSerializer()
@@ -91,6 +98,9 @@ class NewMessageFromAdminManager(NewMessageManager):
         self._group_member_role_serializer = GroupMemberRoleSerializer()
 
         await self._serialize_process()
+
+    async def add_to_db(self):  # TODO: add method
+        print(Fore.LIGHTYELLOW_EX + f'{self.serialize.__name__} in class {self.__class__.__name__}')
 
 
 class NewMessageFromMemberManager(NewMessageManager):
@@ -102,7 +112,7 @@ class NewMessageFromMemberManager(NewMessageManager):
         self.user = Member(self._message)
         self.group = Group(self._message)
 
-    async def serialize(self):
+    async def serialize(self) -> None:
         print(Fore.LIGHTYELLOW_EX + f'{self.serialize.__name__} in class {self.__class__.__name__}')
 
         self._message_serializer = MessagePublicChatSerializer()
@@ -111,3 +121,6 @@ class NewMessageFromMemberManager(NewMessageManager):
         self._group_member_role_serializer = GroupMemberRoleSerializer()
 
         await self._serialize_process()
+
+    async def add_to_db(self):  # TODO: add method
+        print(Fore.LIGHTYELLOW_EX + f'{self.serialize.__name__} in class {self.__class__.__name__}')

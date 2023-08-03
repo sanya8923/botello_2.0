@@ -6,7 +6,7 @@ from handlers import on_new_message_group
 from colorama import init, Fore
 
 
-async def main():
+async def main():df
     init(autoreset=True)
     logging.basicConfig(level=logging.INFO, format=Fore.YELLOW + '%(message)s')
 
