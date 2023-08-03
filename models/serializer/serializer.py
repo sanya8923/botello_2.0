@@ -1,7 +1,9 @@
-from aiogram.types import Message, CallbackQuery
+from models.objects.user import User
+from models.objects.chat import Chat
+from models.objects.update import UpdateData
+from typing import Union
 from abc import ABC, abstractmethod
 from colorama import init, Fore
-from typing import IO, Union
 import json
 
 init(autoreset=True)
@@ -9,7 +11,7 @@ init(autoreset=True)
 
 class Serializer(ABC):
     @abstractmethod
-    async def to_json(self, update: Union[Message, CallbackQuery]):
+    async def to_json(self, obj: Union[User, Chat, UpdateData]):
         pass
 
     @abstractmethod
