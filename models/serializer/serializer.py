@@ -16,6 +16,10 @@ class Serializer(ABC):
     async def from_json(self):
         pass
 
+    @abstractmethod
+    async def from_dict(self):
+        pass
+
     async def add_to_json(self, json_object: str, data: dict):
         print(Fore.LIGHTYELLOW_EX + f'{self.add_to_json.__name__} in class {self.__class__.__name__}')
 
