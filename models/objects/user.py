@@ -13,20 +13,10 @@ class User(Object):
         self.username: Optional[str] = None
         self.first_name: Optional[str] = None
         self.last_name: Optional[str] = None
+        self.new_member: bool = False  # TODO: когда будет готово подключение к БД добей сюда функцию
+
 
 class Member(User):
-    def __init__(self):
-        super().__init__()
-        print(Fore.BLUE + f'{self.__class__.__name__}')
-
-
-class NewMember(Member):
-    def __init__(self):
-        super().__init__()
-        print(Fore.BLUE + f'{self.__class__.__name__}')
-
-
-class MiddleMember(Member):
     def __init__(self):
         super().__init__()
         print(Fore.BLUE + f'{self.__class__.__name__}')
