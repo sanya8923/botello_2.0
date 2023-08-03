@@ -41,3 +41,17 @@ class NewMessageFromCreatorManager(NewMessageManager):
         self.creator_dict: Optional[dict] = None
         self.group_member_role_dict: Optional[dict] = None
 
+    async def serialize(self):
+        print(Fore.LIGHTYELLOW_EX + f'{self.serialize.__name__} in class {self.__class__.__name__}')
+
+        message_serializer = MessagePublicChatSerializer()
+        creator_serializer = CreatorSerializer()
+        group_serializer = GroupSerializer()
+        group_member_role_serializer = GroupMemberRoleSerializer()
+
+        self.message_data_dict = await message_serializer.to_json(self.message_data)  # return dict (don't use) with message data and save json
+        self.creator_dict = await creator_serializer.to_json(self.creator)  # return dict (don't use) with member data and save json
+        self.group_dict = await group_serializer.to_json(self.group)  # return dict (don't use) with group data and save json
+        self.group_member_role_dict = await group_member_role_serializer.to_json(self.message_data)  # return dict (don't use) with group_id, user_id and role and save json
+
+
