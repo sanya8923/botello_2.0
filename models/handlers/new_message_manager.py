@@ -86,9 +86,9 @@ class NewMessageFromAdminManager(NewMessageManager):
         print(Fore.LIGHTYELLOW_EX + f'{self.serialize.__name__} in class {self.__class__.__name__}')
 
         self._message_serializer = MessagePublicChatSerializer()
-        self.user_serializer = AdminSerializer()
-        self.group_serializer = GroupSerializer()
-        self.group_member_role_serializer = GroupMemberRoleSerializer()
+        self._user_serializer = AdminSerializer()
+        self._group_serializer = GroupSerializer()
+        self._group_member_role_serializer = GroupMemberRoleSerializer()
 
         await self._serialize_process()
 
@@ -106,8 +106,8 @@ class NewMessageFromMemberManager(NewMessageManager):
         print(Fore.LIGHTYELLOW_EX + f'{self.serialize.__name__} in class {self.__class__.__name__}')
 
         self._message_serializer = MessagePublicChatSerializer()
-        self.user_serializer = MemberSerializer()
-        self.group_serializer = GroupSerializer()
-        self.group_member_role_serializer = GroupMemberRoleSerializer()
+        self._user_serializer = MemberSerializer()
+        self._group_serializer = GroupSerializer()
+        self._group_member_role_serializer = GroupMemberRoleSerializer()
 
         await self._serialize_process()
