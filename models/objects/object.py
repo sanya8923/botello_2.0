@@ -1,6 +1,6 @@
-from aiogram.types import TelegramObject
+from aiogram.types import Message
 
 
 class Object:
-    def __init__(self):
-        self.object: TelegramObject = None
+    def __init__(self, message: Message):
+        self.message: Message = message
