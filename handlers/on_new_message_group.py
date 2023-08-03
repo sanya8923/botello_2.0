@@ -25,12 +25,9 @@ async def on_new_message_from_creator_group(message: Message):
     message_data = MessagePublicChat(message)
     creator = Creator(message)
     group = Group(message)
-    message_serializer = MessagePublicChatSerializer(message_data)
-    await message_serializer.to_json()
-    member_serializer = CreatorSerializer(creator)
-    await member_serializer.to_json()
-    group_serializer = GroupSerializer(group)
-    dict_chat = await group_serializer.to_json()
+    await MessagePublicChatSerializer(message_data).to_json()  # return dict with message data (analog for json)
+    await CreatorSerializer(creator).to_json()  # return dict with member data (analog for json)
+    await GroupSerializer(group).to_json()  # return dict with group data (analog for json)
 
 
 @router.message(UserRoleFilter(user_role='administrator'))
