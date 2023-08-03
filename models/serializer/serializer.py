@@ -1,26 +1,19 @@
-from aiogram.types import Message
+from aiogram.types import Message, CallbackQuery
 from abc import ABC, abstractmethod
 from colorama import init, Fore
-from typing import IO
+from typing import IO, Union
 import json
 
 init(autoreset=True)
 
 
 class Serializer(ABC):
-    def __init__(self, message: Message):
-        self.message = message
-
     @abstractmethod
-    async def to_json(self):
+    async def to_json(self, update: Union[Message, CallbackQuery]):
         pass
 
     @abstractmethod
     async def from_json(self):
-        pass
-
-    @abstractmethod
-    async def from_message(self):
         pass
 
     async def add_to_json(self, json_object: str, data: dict):
