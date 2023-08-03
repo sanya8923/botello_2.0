@@ -20,14 +20,14 @@ init(autoreset=True)
 class NewMessageManager(ABC):
     def __init__(self, message: Message):
         print(Fore.BLUE + f'{self.__class__.__name__}')
-        self.message = message
+        self._message = message
 
         self.message_data: Optional[MessagePublicChat] = None
-        self.user: Optional[Creator] = None
+        self.user: Union[Creator, Admin, Member, None] = None
         self.group: Optional[Group] = None
 
-        self.message_serializer: Optional[MessagePublicChatSerializer] = None
-        self.user_serializer: Optional[CreatorSerializer] = None
+        self._message_serializer: Optional[MessagePublicChatSerializer] = None
+        self.user_serializer: Union[CreatorSerializer, AdminSerializer, MemberSerializer, None] = None
         self.group_serializer: Optional[GroupSerializer] = None
         self.group_member_role_serializer: Optional[GroupMemberRoleSerializer] = None
 
@@ -40,10 +40,10 @@ class NewMessageManager(ABC):
     async def serialize(self):
         pass
 
-    async def serialize_process(self):
-        print(Fore.LIGHTYELLOW_EX + f'{self.serialize_process.__name__} in class {self.__class__.__name__}')
+    async def _serialize_process(self):
+        print(Fore.LIGHTYELLOW_EX + f'{self._serialize_process.__name__} in class {self.__class__.__name__}')
 
-        self.message_data_dict = await self.message_serializer.to_json(
+        self.message_data_dict = await self._message_serializer.to_json(
             self.message_data)  # return dict (don't use) with message data and save json
         self.user_dict = await self.user_serializer.to_json(
             self.user)  # return dict (don't use) with member data and save json
@@ -58,19 +58,19 @@ class NewMessageFromCreatorManager(NewMessageManager):
         super().__init__(message)
         print(Fore.BLUE + f'{self.__class__.__name__}')
 
-        self.message_data = MessagePublicChat(self.message)
-        self.user = Creator(self.message)
-        self.group = Group(self.message)
+        self.message_data = MessagePublicChat(self._message)
+        self.user = Creator(self._message)
+        self.group = Group(self._message)
 
     async def serialize(self):
         print(Fore.LIGHTYELLOW_EX + f'{self.serialize.__name__} in class {self.__class__.__name__}')
 
-        self.message_serializer = MessagePublicChatSerializer()
+        self._message_serializer = MessagePublicChatSerializer()
         self.user_serializer = CreatorSerializer()
         self.group_serializer = GroupSerializer()
         self.group_member_role_serializer = GroupMemberRoleSerializer()
 
-        await self.serialize_process()
+        await self._serialize_process()
 
 
 class NewMessageFromAdminManager(NewMessageManager):
@@ -78,19 +78,36 @@ class NewMessageFromAdminManager(NewMessageManager):
         super().__init__(message)
         print(Fore.BLUE + f'{self.__class__.__name__}')
 
-        self.message_data = MessagePublicChat(self.message)
-        self.user = Admin(self.message)
-        self.group = Group(self.message)
+        self.message_data = MessagePublicChat(self._message)
+        self.user = Admin(self._message)
+        self.group = Group(self._message)
 
     async def serialize(self):
         print(Fore.LIGHTYELLOW_EX + f'{self.serialize.__name__} in class {self.__class__.__name__}')
 
-        self.message_serializer = MessagePublicChatSerializer()
+        self._message_serializer = MessagePublicChatSerializer()
         self.user_serializer = AdminSerializer()
         self.group_serializer = GroupSerializer()
         self.group_member_role_serializer = GroupMemberRoleSerializer()
 
-        await self.serialize_process()
+        await self._serialize_process()
 
 
+class NewMessageFromMemberManager(NewMessageManager):
+    def __init__(self, message: Message):
+        super().__init__(message)
+        print(Fore.BLUE + f'{self.__class__.__name__}')
 
+        self.message_data = MessagePublicChat(self._message)
+        self.user = Member(self._message)
+        self.group = Group(self._message)
+
+    async def serialize(self):
+        print(Fore.LIGHTYELLOW_EX + f'{self.serialize.__name__} in class {self.__class__.__name__}')
+
+        self._message_serializer = MessagePublicChatSerializer()
+        self.user_serializer = MemberSerializer()
+        self.group_serializer = GroupSerializer()
+        self.group_member_role_serializer = GroupMemberRoleSerializer()
+
+        await self._serialize_process()
