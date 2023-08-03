@@ -33,7 +33,7 @@ class NewMessageManager(ABC):
 
         self.message_data_dict: Optional[dict] = None
         self.group_dict: Optional[dict] = None
-        self.creator_dict: Optional[dict] = None
+        self.user_dict: Optional[dict] = None
         self.group_member_role_dict: Optional[dict] = None
 
     @abstractmethod
@@ -45,7 +45,7 @@ class NewMessageManager(ABC):
 
         self.message_data_dict = await self.message_serializer.to_json(
             self.message_data)  # return dict (don't use) with message data and save json
-        self.creator_dict = await self.user_serializer.to_json(
+        self.user_dict = await self.user_serializer.to_json(
             self.user)  # return dict (don't use) with member data and save json
         self.group_dict = await self.group_serializer.to_json(
             self.group)  # return dict (don't use) with group data and save json
@@ -59,7 +59,7 @@ class NewMessageFromCreatorManager(NewMessageManager):
         print(Fore.BLUE + f'{self.__class__.__name__}')
 
         self.message_data = MessagePublicChat(self.message)
-        self.creator = Creator(self.message)
+        self.user = Creator(self.message)
         self.group = Group(self.message)
 
     async def serialize(self):
@@ -73,7 +73,24 @@ class NewMessageFromCreatorManager(NewMessageManager):
         await self.serialize_process()
 
 
+class NewMessageFromAdminManager(NewMessageManager):
+    def __init__(self, message: Message):
+        super().__init__(message)
+        print(Fore.BLUE + f'{self.__class__.__name__}')
 
+        self.message_data = MessagePublicChat(self.message)
+        self.user = Admin(self.message)
+        self.group = Group(self.message)
+
+    async def serialize(self):
+        print(Fore.LIGHTYELLOW_EX + f'{self.serialize.__name__} in class {self.__class__.__name__}')
+
+        self.message_serializer = MessagePublicChatSerializer()
+        self.user_serializer = AdminSerializer()
+        self.group_serializer = GroupSerializer()
+        self.group_member_role_serializer = GroupMemberRoleSerializer()
+
+        await self.serialize_process()
 
 
 
