@@ -22,3 +22,8 @@ class NewMessageManager(ABC):
         print(Fore.BLUE + f'{self.__class__.__name__}')
         self.message = message
 
+@abstractmethod
+    async def serialize(self):
+        pass
+
+
