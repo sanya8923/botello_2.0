@@ -1,5 +1,5 @@
 from models.serializer.serializer import Serializer
-from models.objects.user import User, Member, MiddleMember, NewMember, Admin, Creator
+from models.objects.user import User, Member, Admin, Creator
 from aiogram.types import Message
 from typing import Optional
 from colorama import init, Fore
