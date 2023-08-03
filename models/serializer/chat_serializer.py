@@ -13,10 +13,10 @@ class ChatSerializer(Serializer):
 
         self.chat_id: Optional[int] = None
 
-    async def to_json(self, message: Message):
+    async def to_json(self, chat: Chat):
         print(Fore.LIGHTYELLOW_EX + f'{self.to_json.__name__} in class {self.__class__.__name__}')
 
-        self.chat_id = message.chat.id
+        self.chat_id = chat.id
         data = {'id': self.chat_id}
 
         return data
@@ -37,10 +37,10 @@ class PrivateChatSerializer(ChatSerializer):
         self.file: str = 'jsons/private_chat.json'
         self.chat_type: str = 'private'
 
-    async def to_json(self, message: Message):
+    async def to_json(self, chat: PrivateChat):
         print(Fore.LIGHTYELLOW_EX + f'{self.to_json.__name__} in class {self.__class__.__name__}')
 
-        data = await super().to_json(message)
+        data = await super().to_json(chat)
         data['type'] = self.chat_type
         await self.add_to_json(self.file, data)
 
@@ -63,13 +63,13 @@ class PublicChatSerializer(ChatSerializer):
         self.title: Optional[str] = None
         self.file: str = 'jsons/public_chat.json'
 
-    async def to_json(self, message: Message):
+    async def to_json(self, chat: PublicChat):
         print(Fore.LIGHTYELLOW_EX + f'{self.to_json.__name__} in class {self.__class__.__name__}')
 
-        data = await super().to_json(message)
+        data = await super().to_json(chat)
 
-        self.username = message.chat.username
-        self.title = message.chat.title
+        self.username = chat.username
+        self.title = chat.title
 
         data['username'] = self.username
         data['title'] = self.title
@@ -92,10 +92,10 @@ class GroupSerializer(PublicChatSerializer):
 
         self.chat_type: str = 'group'
 
-    async def to_json(self, message: Message):
+    async def to_json(self, group: Group):
         print(Fore.LIGHTYELLOW_EX + f'{self.to_json.__name__} in class {self.__class__.__name__}')
 
-        data = await super().to_json(message)
+        data = await super().to_json(group)
         data['type'] = self.chat_type
         await self.add_to_json(self.file, data)
 
@@ -116,10 +116,10 @@ class SuperGroupSerializer(PublicChatSerializer):
 
         self.chat_type: str = 'supergroup'
 
-    async def to_json(self, message: Message):
+    async def to_json(self, group: SuperGroup):
         print(Fore.LIGHTYELLOW_EX + f'{self.to_json.__name__} in class {self.__class__.__name__}')
 
-        data = await super().to_json(message)
+        data = await super().to_json(group)
         data['type'] = self.chat_type
         await self.add_to_json(self.file, data)
 
