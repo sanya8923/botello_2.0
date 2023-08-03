@@ -1,6 +1,6 @@
 from models.serializer.serializer import Serializer
 from aiogram.types import Message, CallbackQuery
-from typing import Union, Optional
+from typing import Union, Optional, Type
 from models.objects.update import UpdateData, MessageData, MessagePublicChat, MessagePrivateChat, Callback
 from colorama import init, Fore
 
@@ -11,7 +11,7 @@ class UpdateSerializer(Serializer):
     def __init__(self):
         print(Fore.BLUE + f'{self.__class__.__name__}')
 
-    async def to_json(self, message: Message):  # abstract method
+    async def to_json(self, update: UpdateData):  # abstract method
         pass
 
     async def from_json(self):  # abstract method
@@ -32,13 +32,12 @@ class MessageDataSerializer(UpdateSerializer):
         self.from_chat: Optional[int] = None
         self.file: str = 'jsons/message.json'
 
-    async def to_json(self, message: Message):
+    async def to_json(self, update: MessageData):
         print(Fore.LIGHTYELLOW_EX + f'{self.to_json.__name__} in class {self.__class__.__name__}')
-
-        self.id = message.message_id
-        self.message_text = message.text
-        self.from_user = message.from_user.id
-        self.from_chat = message.chat.id
+        self.id = update.id
+        self.message_text = update.text
+        self.from_user = update.from_user.id
+        self.from_chat = update.from_chat.id
 
         data = {
             'id': self.id,
