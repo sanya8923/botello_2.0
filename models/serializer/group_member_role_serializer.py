@@ -37,3 +37,6 @@ class GroupMemberRoleSerializer(Serializer):
 
     async def from_json(self):  # TODO: add method
         pass
+
+    async def from_dict(self):  # TODO: add method
+        pass
