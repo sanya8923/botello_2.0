@@ -27,3 +27,17 @@ class NewMessageManager(ABC):
         pass
 
 
+class NewMessageFromCreatorManager(NewMessageManager):
+    def __init__(self, message: Message):
+        super().__init__(message)
+        print(Fore.BLUE + f'{self.__class__.__name__}')
+
+        self.message_data = MessagePublicChat(self.message)
+        self.creator = Creator(self.message)
+        self.group = Group(self.message)
+
+        self.message_data_dict: Optional[dict] = None
+        self.group_dict: Optional[dict] = None
+        self.creator_dict: Optional[dict] = None
+        self.group_member_role_dict: Optional[dict] = None
+
