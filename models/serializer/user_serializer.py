@@ -47,18 +47,6 @@ class MemberSerializer(UserSerializer):
         print(Fore.BLUE + f'{self.__class__.__name__}')
 
 
-class MiddleMemberSerializer(MemberSerializer):
-    def __init__(self):
-        super().__init__()
-        print(Fore.BLUE + f'{self.__class__.__name__}')
-
-
-class NewMemberSerializer(MemberSerializer):
-    def __init__(self):
-        super().__init__()
-        print(Fore.BLUE + f'{self.__class__.__name__}')
-
-
 class AdminSerializer(UserSerializer):
     def __init__(self):
         super().__init__()
