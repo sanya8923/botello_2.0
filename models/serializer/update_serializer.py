@@ -17,6 +17,9 @@ class UpdateSerializer(Serializer):
     async def from_json(self):  # abstract method
         pass
 
+    async def from_dict(self):  # abstract method
+        pass
+
 
 class MessageDataSerializer(UpdateSerializer):
     def __init__(self):
@@ -49,6 +52,9 @@ class MessageDataSerializer(UpdateSerializer):
         return data
 
     async def from_json(self):  # TODO: add method
+        pass
+
+    async def from_dict(self):  # TODO: add method
         pass
 
 
