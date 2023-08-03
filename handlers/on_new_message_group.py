@@ -5,8 +5,8 @@ from aiogram.types import Message
 from filters.user_role_filter import UserRoleFilter
 from filters.chat_type_filter import ChatTypeFilter
 
-from models.objects.user import MiddleMember, NewMember, Admin, Creator
-from models.serializer.user_serializer import MiddleMemberSerializer, NewMemberSerializer, AdminSerializer, CreatorSerializer
+from models.objects.user import Admin, Creator
+from models.serializer.user_serializer import AdminSerializer, CreatorSerializer
 
 from models.objects.chat import Group
 from models.serializer.chat_serializer import GroupSerializer
