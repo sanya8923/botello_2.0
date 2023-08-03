@@ -25,6 +25,9 @@ class ChatSerializer(Serializer):
         print(Fore.LIGHTYELLOW_EX + f'{self.from_json.__name__} in class {self.__class__.__name__}')
         pass
 
+    async def from_dict(self):  # TODO: add method
+        pass
+
 
 class PrivateChatSerializer(ChatSerializer):
     def __init__(self):
@@ -45,6 +48,9 @@ class PrivateChatSerializer(ChatSerializer):
 
     async def from_json(self):  # TODO: add method
         print(Fore.LIGHTYELLOW_EX + f'{self.from_json.__name__} in class {self.__class__.__name__}')
+        pass
+
+    async def from_dict(self):  # TODO: add method
         pass
 
 
@@ -75,6 +81,9 @@ class PublicChatSerializer(ChatSerializer):
         print(Fore.LIGHTYELLOW_EX + f'{self.from_json.__name__} in class {self.__class__.__name__}')
         pass
 
+    async def from_dict(self):  # TODO: add method
+        pass
+
 
 class GroupSerializer(PublicChatSerializer):
     def __init__(self):
@@ -96,6 +105,9 @@ class GroupSerializer(PublicChatSerializer):
         print(Fore.LIGHTYELLOW_EX + f'{self.from_json.__name__} in class {self.__class__.__name__}')
         pass
 
+    async def from_dict(self):  # TODO: add method
+        pass
+
 
 class SuperGroupSerializer(PublicChatSerializer):
     def __init__(self):
@@ -115,4 +127,7 @@ class SuperGroupSerializer(PublicChatSerializer):
 
     async def from_json(self):  # TODO: add method
         print(Fore.LIGHTYELLOW_EX + f'{self.from_json.__name__} in class {self.__class__.__name__}')
+        pass
+
+    async def from_dict(self):  # TODO: add method
         pass
