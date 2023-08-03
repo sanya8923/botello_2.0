@@ -40,6 +40,9 @@ class UserSerializer(Serializer):
         print(Fore.LIGHTYELLOW_EX + f'{self.from_json.__name__} in class {self.__class__.__name__}')
         pass
 
+    async def from_dict(self):  # TODO: add method
+        pass
+
 
 class MemberSerializer(UserSerializer):
     def __init__(self):
