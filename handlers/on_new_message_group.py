@@ -14,6 +14,8 @@ from models.serializer.chat_serializer import GroupSerializer
 from models.objects.update import MessagePublicChat
 from models.serializer.update_serializer import MessagePublicChatSerializer
 
+from models.serializer.group_member_role_serializer import GroupMemberRoleSerializer
+
 router = Router()
 router.message(ChatTypeFilter('group'))
 init(autoreset=True)
@@ -29,10 +31,12 @@ async def on_new_message_from_creator_group(message: Message):
     message_serializer = MessagePublicChatSerializer()
     user_serializer = CreatorSerializer()
     group_serializer = GroupSerializer()
+    group_member_role_serializer = GroupMemberRoleSerializer()
 
-    await message_serializer.to_json(message)  # return dict with message data (analog for json)
-    await user_serializer.to_json(message)  # return dict with member data (analog for json)
-    await group_serializer.to_json(message)  # return dict with group data (analog for json)
+    await message_serializer.to_json(message)  # return dict with message data and save json
+    await user_serializer.to_json(message)  # return dict with member data and save json
+    await group_serializer.to_json(message)  # return dict with group data and save json
+    await group_member_role_serializer.to_json(message)  # return dict with group_id, user_id and role and save json
 
 
 @router.message(UserRoleFilter(user_role='administrator'))
