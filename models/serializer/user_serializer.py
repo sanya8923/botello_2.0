@@ -17,13 +17,13 @@ class UserSerializer(Serializer):
         self.user_last_name: Optional[str] = None
         self.file: str = 'jsons/user.json'
 
-    async def to_json(self, message: Message):
+    async def to_json(self, user: User):
         print(Fore.LIGHTYELLOW_EX + f'{self.to_json.__name__} in class {self.__class__.__name__}')
 
-        self.user_id = message.from_user.id
-        self.username = message.from_user.username
-        self.user_first_name = message.from_user.first_name
-        self.user_last_name = message.from_user.last_name
+        self.user_id = user.id
+        self.username = user.username
+        self.user_first_name = user.first_name
+        self.user_last_name = user.last_name
 
         data = {
             'id': self.user_id,
