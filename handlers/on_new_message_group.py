@@ -4,7 +4,7 @@ from aiogram.types import Message
 
 from filters.user_role_filter import UserRoleFilter
 from filters.chat_type_filter import ChatTypeFilter
-from models.new_message_manager import NewMessageFromCreatorManager, NewMessageFromAdminManager, \
+from models.manager.new_message_manager import NewMessageFromCreatorManager, NewMessageFromAdminManager, \
     NewMessageFromMemberManager
 
 
