@@ -1,3 +1,4 @@
+from abc import ABC, abstractmethod
 import motor.motor_asyncio
 import config_reader
 
@@ -6,9 +7,13 @@ cluster = motor.motor_asyncio.AsyncIOMotorClient(config_reader.config.mongo_db.g
 db = cluster['db']
 
 
-class Db:
+class Db(ABC):
     def __init__(self):
         self.mongo_db = db
+
+    @abstractmethod
+    async def plug(self):
+        pass
 
 
 class MongoDb(Db):
@@ -16,3 +21,5 @@ class MongoDb(Db):
         super().__init__()
         self.db = self.mongo_db
 
+    async def plug(self):
+        pass
