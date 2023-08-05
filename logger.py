@@ -1,7 +1,9 @@
 import logging
 import inspect
 import time
-from colorama import init, Fore
+from colorama import Fore, init
+from contextlib import suppress
+import copy
 
 init(autoreset=True)
 
@@ -10,31 +12,45 @@ class MyLogger:
     def __init__(self, name):
         self.logger = logging.getLogger(name)
         self.logger.setLevel(logging.INFO)
-
-        # Создаем новый форматтер с нужным нам форматом
-        formatter = logging.Formatter(Fore.YELLOW + '%(asctime)s: - %(levelname)s - %(message)s')
+        formatter = logging.Formatter(Fore.BLUE + '%(asctime)s: %(message)s')
 
         # Добавляем обработчик для вывода логов на консоль
         console_handler = logging.StreamHandler()
         console_handler.setFormatter(formatter)
         self.logger.addHandler(console_handler)
 
-    def log_method_name(self):
-        stack = inspect.stack()
-        method_name = stack[1].function
-        self.logger.info(f'{method_name} worked successful')  # TODO: do
+    def log_class_info(self, function):
+        def wrapper(*args, **kwargs):
+            start_time = time.time()
+            result = function(*args, **kwargs)
+            end_time = time.time()
+            execution_time = end_time - start_time
 
-    def log_with_execution_time(self, message, function):
-        start_time = time.time()
-        result = function(message)
-        end_time = time.time()
-        execution_time = end_time - start_time
+            stack = inspect.stack()
+            frame = stack[2]
 
-        extra = {'elapsed': execution_time}
-        self.logger.info(f'{message} {function.__name__}. Speed: {extra["elapsed"]}')
-        return result
+            class_name_line = frame[4][0].split('=')
+            pattern = frame[3].strip()
 
-    def do_something(self):
-        self.log_method_name()
-        self.log_with_execution_time()
-        # Ваша логика здесь
+            with suppress(IndexError):  # TODO: это неправильно. Переделай
+                class_name = copy.deepcopy(class_name_line[1])
+                if pattern != 'wrapper' and pattern != '__init__':
+                    print(Fore.BLUE + f'Class {class_name[:-1]}. Speed: {execution_time:.6f} sec')
+            return result
+
+        return wrapper
+
+    def log_method_info(self, function):
+        def wrapper(*args, **kwargs):
+            start_time = time.time()
+            result = function(*args, **kwargs)
+            end_time = time.time()
+            execution_time = end_time - start_time
+
+            stack = inspect.stack()
+            method_name = stack[1].function
+            print(Fore.YELLOW + f'method {method_name}. Speed: {execution_time:.6f} sec')
+
+            return result
+
+        return wrapper
