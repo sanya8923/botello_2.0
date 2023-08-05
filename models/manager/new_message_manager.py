@@ -36,6 +36,8 @@ class NewMessageManager(ABC):
         self.user_dict: Optional[dict] = None
         self.group_member_role_dict: Optional[dict] = None
 
+        self.name_col: Optional[str] = None
+
     @abstractmethod
     async def serialize(self) -> None:
         pass
@@ -78,6 +80,7 @@ class NewMessageFromCreatorManager(NewMessageManager):
 
     async def add_to_db(self):  # TODO: add method
         print(Fore.LIGHTYELLOW_EX + f'{self.serialize.__name__} in class {self.__class__.__name__}')
+
 
 
 class NewMessageFromAdminManager(NewMessageManager):
