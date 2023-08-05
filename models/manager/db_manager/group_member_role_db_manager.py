@@ -1,7 +1,11 @@
 from models.manager.db_manager.db_manager import DbManager
+from models.objects.db import MongoDb
 
 
 class GroupMemberRoleDbManager(DbManager):
+    def __init__(self):
+        super().__init__()
+
     async def add(self):  # abstract method
         pass
 
@@ -19,6 +23,9 @@ class GroupMemberRoleDbManager(DbManager):
 
 
 class GroupMemberRoleMongoDbManager(GroupMemberRoleDbManager):
+    def __init__(self):
+        super().__init__()
+
     async def add(self):  # TODO: add method
         pass
 
