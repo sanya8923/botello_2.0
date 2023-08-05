@@ -4,6 +4,7 @@ from pydantic_settings import BaseSettings
 
 class Setting(BaseSettings):
     bot_token: SecretStr
+    mongo_db: SecretStr
 
     class Config:
         env_file = '.env'
