@@ -2,29 +2,28 @@ from models.serializer.serializer import Serializer
 from typing import Optional
 from aiogram.types import Message
 from models.objects.chat import Chat, PublicChat, PrivateChat, Group, SuperGroup
-from colorama import init, Fore
-
-init(autoreset=True)
+import logger
 
 
 class ChatSerializer(Serializer):
+    @logger.MyLogger(name='log').log_class_info
     def __init__(self):
-        print(Fore.BLUE + f'{self.__class__.__name__}')
-
+        super().__init__()
         self.chat_id: Optional[int] = None
 
+    @logger.MyLogger(name='log').log_method_info
     async def to_json(self, chat: Chat) -> dict:
-        print(Fore.LIGHTYELLOW_EX + f'{self.to_json.__name__} in class {self.__class__.__name__}')
 
         self.chat_id = chat.id
         data = {'id': self.chat_id}
 
         return data
 
+    @logger.MyLogger(name='log').log_method_info
     async def from_json(self):  # TODO: add method
-        print(Fore.LIGHTYELLOW_EX + f'{self.from_json.__name__} in class {self.__class__.__name__}')
         pass
 
+    @logger.MyLogger(name='log').log_method_info
     async def from_dict(self):  # TODO: add method
         pass
 
@@ -32,14 +31,11 @@ class ChatSerializer(Serializer):
 class PrivateChatSerializer(ChatSerializer):
     def __init__(self):
         super().__init__()
-        print(Fore.BLUE + f'{self.__class__.__name__}')
 
         self.file: str = 'jsons/private_chat.json'
         self.chat_type: str = 'private'
 
     async def to_json(self, chat: PrivateChat) -> dict:
-        print(Fore.LIGHTYELLOW_EX + f'{self.to_json.__name__} in class {self.__class__.__name__}')
-
         data = await super().to_json(chat)
         data['type'] = self.chat_type
         await self.add_to_json(self.file, data)
@@ -47,7 +43,6 @@ class PrivateChatSerializer(ChatSerializer):
         return data
 
     async def from_json(self):  # TODO: add method
-        print(Fore.LIGHTYELLOW_EX + f'{self.from_json.__name__} in class {self.__class__.__name__}')
         pass
 
     async def from_dict(self):  # TODO: add method
@@ -55,16 +50,16 @@ class PrivateChatSerializer(ChatSerializer):
 
 
 class PublicChatSerializer(ChatSerializer):
+    @logger.MyLogger(name='log').log_class_info
     def __init__(self):
         super().__init__()
-        print(Fore.BLUE + f'{self.__class__.__name__}')
 
         self.username: Optional[str] = None
         self.title: Optional[str] = None
         self.file: str = 'jsons/public_chat.json'
 
+    @logger.MyLogger(name='log').log_method_info
     async def to_json(self, chat: PublicChat) -> dict:
-        print(Fore.LIGHTYELLOW_EX + f'{self.to_json.__name__} in class {self.__class__.__name__}')
 
         data = await super().to_json(chat)
 
@@ -77,10 +72,11 @@ class PublicChatSerializer(ChatSerializer):
 
         return data
 
+    @logger.MyLogger(name='log').log_method_info
     async def from_json(self):  # TODO: add method
-        print(Fore.LIGHTYELLOW_EX + f'{self.from_json.__name__} in class {self.__class__.__name__}')
         pass
 
+    @logger.MyLogger(name='log').log_method_info
     async def from_dict(self):  # TODO: add method
         pass
 
@@ -88,12 +84,10 @@ class PublicChatSerializer(ChatSerializer):
 class GroupSerializer(PublicChatSerializer):
     def __init__(self):
         super().__init__()
-        print(Fore.BLUE + f'{self.__class__.__name__}')
 
         self.chat_type: str = 'group'
 
     async def to_json(self, group: Group):
-        print(Fore.LIGHTYELLOW_EX + f'{self.to_json.__name__} in class {self.__class__.__name__}')
 
         data = await super().to_json(group)
         data['type'] = self.chat_type
@@ -102,7 +96,6 @@ class GroupSerializer(PublicChatSerializer):
         return data
 
     async def from_json(self):  # TODO: add method
-        print(Fore.LIGHTYELLOW_EX + f'{self.from_json.__name__} in class {self.__class__.__name__}')
         pass
 
     async def from_dict(self):  # TODO: add method
@@ -112,12 +105,10 @@ class GroupSerializer(PublicChatSerializer):
 class SuperGroupSerializer(PublicChatSerializer):
     def __init__(self):
         super().__init__()
-        print(Fore.BLUE + f'{self.__class__.__name__}')
 
         self.chat_type: str = 'supergroup'
 
     async def to_json(self, group: SuperGroup):
-        print(Fore.LIGHTYELLOW_EX + f'{self.to_json.__name__} in class {self.__class__.__name__}')
 
         data = await super().to_json(group)
         data['type'] = self.chat_type
@@ -126,7 +117,6 @@ class SuperGroupSerializer(PublicChatSerializer):
         return data
 
     async def from_json(self):  # TODO: add method
-        print(Fore.LIGHTYELLOW_EX + f'{self.from_json.__name__} in class {self.__class__.__name__}')
         pass
 
     async def from_dict(self):  # TODO: add method

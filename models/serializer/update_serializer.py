@@ -3,28 +3,33 @@ from aiogram.types import Message, CallbackQuery
 from typing import Union, Optional, Type
 from models.objects.update import UpdateData, MessageData, MessagePublicChat, MessagePrivateChat, Callback
 from colorama import init, Fore
+import logger
 
 init(autoreset=True)
 
 
 class UpdateSerializer(Serializer):
+    @logger.MyLogger(name='log').log_class_info
     def __init__(self):
-        print(Fore.BLUE + f'{self.__class__.__name__}')
+        super().__init__()
 
+    @logger.MyLogger(name='log').log_method_info
     async def to_json(self, update: UpdateData) -> dict:  # abstract method
         pass
 
+    @logger.MyLogger(name='log').log_method_info
     async def from_json(self):  # abstract method
         pass
 
+    @logger.MyLogger(name='log').log_method_info
     async def from_dict(self):  # abstract method
         pass
 
 
 class MessageDataSerializer(UpdateSerializer):
+    @logger.MyLogger(name='log').log_class_info
     def __init__(self):
         super().__init__()
-        print(Fore.BLUE + f'{self.__class__.__name__}')
 
         self.id: Optional[int] = None
         self.message_text: Optional[str] = None
@@ -32,8 +37,8 @@ class MessageDataSerializer(UpdateSerializer):
         self.from_chat: Optional[int] = None
         self.file: str = 'jsons/message.json'
 
+    @logger.MyLogger(name='log').log_method_info
     async def to_json(self, update: MessageData) -> dict:
-        print(Fore.LIGHTYELLOW_EX + f'{self.to_json.__name__} in class {self.__class__.__name__}')
         self.id = update.id
         self.message_text = update.text
         self.from_user = update.from_user.id
@@ -50,9 +55,11 @@ class MessageDataSerializer(UpdateSerializer):
 
         return data
 
+    @logger.MyLogger(name='log').log_method_info
     async def from_json(self):  # TODO: add method
         pass
 
+    @logger.MyLogger(name='log').log_method_info
     async def from_dict(self):  # TODO: add method
         pass
 
@@ -60,17 +67,14 @@ class MessageDataSerializer(UpdateSerializer):
 class MessagePrivateChatSerializer(MessageDataSerializer):
     def __init__(self):
         super().__init__()
-        print(Fore.BLUE + f'{self.__class__.__name__}')
 
 
 class MessagePublicChatSerializer(MessageDataSerializer):
     def __init__(self):
         super().__init__()
-        print(Fore.BLUE + f'{self.__class__.__name__}')
 
 
 class CallbackSerializer(UpdateSerializer):
     def __init__(self):
         super().__init__()
-        print(Fore.BLUE + f'{self.__class__.__name__}')
         self.callback_data: Optional[str] = None

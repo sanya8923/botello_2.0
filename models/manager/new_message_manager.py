@@ -3,6 +3,7 @@ from colorama import Fore, init
 from abc import ABC, abstractmethod
 from typing import Optional, Union
 
+import logger
 from models.objects.user import Creator, Admin, Member
 from models.serializer.user_serializer import CreatorSerializer, AdminSerializer, MemberSerializer
 
@@ -13,13 +14,15 @@ from models.objects.update import MessagePublicChat
 from models.serializer.update_serializer import MessagePublicChatSerializer
 
 from models.serializer.group_member_role_serializer import GroupMemberRoleSerializer
+from models.manager.manager import Manager
 
 init(autoreset=True)
 
 
-class NewMessageManager(ABC):
+class NewMessageManager(ABC, Manager):
+    @logger.MyLogger(name='log').log_class_info
     def __init__(self, message: Message):
-        print(Fore.BLUE + f'{self.__class__.__name__}')
+        super().__init__(message)
         self._message = message
 
         self.message_data: Optional[MessagePublicChat] = None
@@ -39,15 +42,17 @@ class NewMessageManager(ABC):
         self.name_col: Optional[str] = None
 
     @abstractmethod
+    @logger.MyLogger(name='log').log_method_info
     async def serialize(self) -> None:
         pass
 
     @abstractmethod
+    @logger.MyLogger(name='log').log_method_info
     async def add_to_db(self):
         pass
 
+    @logger.MyLogger(name='log').log_method_info
     async def _serialize_process(self) -> None:
-        print(Fore.LIGHTYELLOW_EX + f'{self._serialize_process.__name__} in class {self.__class__.__name__}')
 
         self.message_data_dict = await self._message_serializer.to_json(
             self.message_data)  # return dict (don't use) with message data and save json
@@ -62,14 +67,12 @@ class NewMessageManager(ABC):
 class NewMessageFromCreatorManager(NewMessageManager):
     def __init__(self, message: Message):
         super().__init__(message)
-        print(Fore.BLUE + f'{self.__class__.__name__}')
 
         self.message_data = MessagePublicChat(self._message)
         self.user = Creator(self._message)
         self.group = Group(self._message)
 
     async def serialize(self) -> None:
-        print(Fore.LIGHTYELLOW_EX + f'{self.serialize.__name__} in class {self.__class__.__name__}')
 
         self._message_serializer = MessagePublicChatSerializer()
         self._user_serializer = CreatorSerializer()
@@ -79,21 +82,18 @@ class NewMessageFromCreatorManager(NewMessageManager):
         await self._serialize_process()
 
     async def add_to_db(self):  # TODO: add method
-        print(Fore.LIGHTYELLOW_EX + f'{self.serialize.__name__} in class {self.__class__.__name__}')
-
+        pass
 
 
 class NewMessageFromAdminManager(NewMessageManager):
     def __init__(self, message: Message):
         super().__init__(message)
-        print(Fore.BLUE + f'{self.__class__.__name__}')
 
         self.message_data = MessagePublicChat(self._message)
         self.user = Admin(self._message)
         self.group = Group(self._message)
 
     async def serialize(self) -> None:
-        print(Fore.LIGHTYELLOW_EX + f'{self.serialize.__name__} in class {self.__class__.__name__}')
 
         self._message_serializer = MessagePublicChatSerializer()
         self._user_serializer = AdminSerializer()
@@ -103,20 +103,19 @@ class NewMessageFromAdminManager(NewMessageManager):
         await self._serialize_process()
 
     async def add_to_db(self):  # TODO: add method
-        print(Fore.LIGHTYELLOW_EX + f'{self.serialize.__name__} in class {self.__class__.__name__}')
+        pass
 
 
 class NewMessageFromMemberManager(NewMessageManager):
     def __init__(self, message: Message):
         super().__init__(message)
-        print(Fore.BLUE + f'{self.__class__.__name__}')
 
         self.message_data = MessagePublicChat(self._message)
         self.user = Member(self._message)
         self.group = Group(self._message)
 
+    # @logger.MyLogger(name='log').log_method_info_def
     async def serialize(self) -> None:
-        print(Fore.LIGHTYELLOW_EX + f'{self.serialize.__name__} in class {self.__class__.__name__}')
 
         self._message_serializer = MessagePublicChatSerializer()
         self._user_serializer = MemberSerializer()
@@ -125,5 +124,6 @@ class NewMessageFromMemberManager(NewMessageManager):
 
         await self._serialize_process()
 
+    # @logger.MyLogger(name='log').log_method_info_def
     async def add_to_db(self):  # TODO: add method
-        print(Fore.LIGHTYELLOW_EX + f'{self.serialize.__name__} in class {self.__class__.__name__}')
+        pass
