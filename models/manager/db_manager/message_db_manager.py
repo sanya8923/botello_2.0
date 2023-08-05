@@ -2,6 +2,9 @@ from models.manager.db_manager.db_manager import DbManager
 
 
 class MessageDbManager(DbManager):
+    def __init__(self):
+        super().__init__()
+
     async def add(self):  # abstract method
         pass
 
@@ -19,6 +22,9 @@ class MessageDbManager(DbManager):
 
 
 class MessageMongoDbManager(MessageDbManager):
+    def __init__(self):
+        super().__init__()
+
     async def add(self):  # TODO: add method
         pass
 
