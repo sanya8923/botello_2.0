@@ -2,6 +2,9 @@ from models.manager.db_manager.db_manager import DbManager
 
 
 class UserDbManager(DbManager):
+    def __init__(self):
+        super().__init__()
+
     async def add(self):  # abstract method
         pass
 
@@ -19,6 +22,9 @@ class UserDbManager(DbManager):
 
 
 class UserMongoDbManager(UserDbManager):
+    def __init__(self):
+        super().__init__()
+
     async def add(self):  # TODO: add method
         pass
 
