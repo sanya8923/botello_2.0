@@ -1,8 +1,13 @@
 from abc import ABC, abstractmethod
+from typing import Optional, Type
+from motor.motor_asyncio import AsyncIOMotorDatabase
+# from logger import MyLogger
 
 
 class DbManager(ABC):
-    pass
+    def __init__(self):
+        self._db: Optional[Type[AsyncIOMotorDatabase]]
+        # self.logger: MyLogger('')
 
     @abstractmethod
     async def add(self):
