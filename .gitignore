@@ -5,3 +5,4 @@ venv/
 config_reader.py
 jsons/
 __pycache__/
+.DS_Store
