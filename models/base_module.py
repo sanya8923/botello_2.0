@@ -8,5 +8,5 @@ logger = MyLogger('my_logger')
 
 class Base:
     def __init__(self, *args, **kwargs):
-        print(Fore.LIGHTYELLOW_EX + f'{self.__class__.__name__}')
+        print(Fore.LIGHTBLUE_EX + f'{self.__class__.__name__}')
         self.logger = logger
