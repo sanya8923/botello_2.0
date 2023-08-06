@@ -20,13 +20,14 @@ init(autoreset=True)
 
 
 class NewMessageManager(ABC, Manager):
-    def __init__(self, message: Message):
+    def __init__(self, message: Message, from_private: bool = False):
         super().__init__(message)
         self._message = message
 
         self.message_data: Optional[MessagePublicChat] = None
         self.user: Union[Creator, Admin, Member, None] = None
         self.group: Optional[Group] = None
+        self.from_private: bool = from_private
 
         self._message_serializer: Optional[MessagePublicChatSerializer] = None
         self._user_serializer: Union[CreatorSerializer, AdminSerializer, MemberSerializer, None] = None
@@ -64,8 +65,8 @@ class NewMessageManager(ABC, Manager):
 
 
 class NewMessageFromCreatorManager(NewMessageManager):
-    def __init__(self, message: Message):
-        super().__init__(message)
+    def __init__(self, message: Message, from_private: bool = False):
+        super().__init__(message, from_private)
 
         self.message_data = MessagePublicChat(self._message)
         self.user = Creator(self._message)
@@ -85,8 +86,8 @@ class NewMessageFromCreatorManager(NewMessageManager):
 
 
 class NewMessageFromAdminManager(NewMessageManager):
-    def __init__(self, message: Message):
-        super().__init__(message)
+    def __init__(self, message: Message, from_private: bool = False):
+        super().__init__(message, from_private)
 
         self.message_data = MessagePublicChat(self._message)
         self.user = Admin(self._message)
@@ -106,14 +107,13 @@ class NewMessageFromAdminManager(NewMessageManager):
 
 
 class NewMessageFromMemberManager(NewMessageManager):
-    def __init__(self, message: Message):
-        super().__init__(message)
+    def __init__(self, message: Message, from_private: bool = False):
+        super().__init__(message, from_private)
 
         self.message_data = MessagePublicChat(self._message)
         self.user = Member(self._message)
         self.group = Group(self._message)
 
-    # @logger.MyLogger(name='log').log_method_info_def
     async def serialize(self) -> None:
 
         self._message_serializer = MessagePublicChatSerializer()
@@ -123,6 +123,5 @@ class NewMessageFromMemberManager(NewMessageManager):
 
         await self._serialize_process()
 
-    # @logger.MyLogger(name='log').log_method_info_def
     async def add_to_db(self):  # TODO: add method
         pass
