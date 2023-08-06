@@ -14,7 +14,6 @@ db = cluster['db']
 
 
 class Db(ABC):
-    @logger.MyLogger(name='log').log_class_info
     def __init__(self):
         self.db: Optional[Type[Type[AsyncIOMotorDatabase]]]  # add new type when you add new databases
         print(Fore.YELLOW + 'DB RUN')

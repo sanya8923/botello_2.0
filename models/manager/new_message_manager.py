@@ -20,7 +20,6 @@ init(autoreset=True)
 
 
 class NewMessageManager(ABC, Manager):
-    @logger.MyLogger(name='log').log_class_info
     def __init__(self, message: Message):
         super().__init__(message)
         self._message = message

@@ -9,7 +9,6 @@ init(autoreset=True)
 
 
 class UpdateSerializer(Serializer):
-    @logger.MyLogger(name='log').log_class_info
     def __init__(self):
         super().__init__()
 
@@ -27,7 +26,6 @@ class UpdateSerializer(Serializer):
 
 
 class MessageDataSerializer(UpdateSerializer):
-    @logger.MyLogger(name='log').log_class_info
     def __init__(self):
         super().__init__()
 

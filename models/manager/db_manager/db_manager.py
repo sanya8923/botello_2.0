@@ -6,7 +6,6 @@ import logger
 
 
 class DbManager(ABC, Manager):
-    @logger.MyLogger(name='log').log_class_info
     def __init__(self):
         super().__init__()
         self._db: Optional[Type[AsyncIOMotorDatabase]]

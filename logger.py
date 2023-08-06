@@ -49,7 +49,7 @@ class MyLogger:
 
             stack = inspect.stack()
             method_name = stack[1].function
-            print(Fore.YELLOW + f'method {method_name}. Speed: {execution_time:.6f} sec')
+            print(Fore.BLUE + f'{method_name.ljust(20)} {execution_time:.8f} sec')
 
             return result
 

@@ -6,7 +6,6 @@ import logger
 
 
 class ChatSerializer(Serializer):
-    @logger.MyLogger(name='log').log_class_info
     def __init__(self):
         super().__init__()
         self.chat_id: Optional[int] = None
@@ -50,7 +49,6 @@ class PrivateChatSerializer(ChatSerializer):
 
 
 class PublicChatSerializer(ChatSerializer):
-    @logger.MyLogger(name='log').log_class_info
     def __init__(self):
         super().__init__()
 

@@ -12,7 +12,6 @@ init(autoreset=True)
 
 
 class Serializer(ABC, Base):
-    @logger.MyLogger(name='log').log_class_info
     def __init__(self):
         super().__init__()
 
