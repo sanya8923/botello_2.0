@@ -27,7 +27,7 @@ class NewMessageManager(ABC, Manager):
         self.message_data: Optional[MessagePublicChat] = None
         self.user: Union[Creator, Admin, Member, None] = None
         self.group: Optional[Group] = None
-        self.from_private: bool = from_private
+        self.from_private: bool = from_private  # TODO: удали если не придумал
 
         self._message_serializer: Optional[MessagePublicChatSerializer] = None
         self._user_serializer: Union[CreatorSerializer, AdminSerializer, MemberSerializer, None] = None
