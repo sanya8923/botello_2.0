@@ -26,6 +26,7 @@ async def on_new_message_from_admin_group(message: Message):
 
     manager = NewMessageFromAdminManager(message)
     await manager.serialize()
+    await manager.add_to_db()
 
 
 @router.message(UserRoleFilter(user_role='member'))
@@ -33,4 +34,5 @@ async def on_new_message_from_member_group(message: Message):
 
     manager = NewMessageFromMemberManager(message)
     await manager.serialize()
+    await manager.add_to_db()
 
