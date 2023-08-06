@@ -8,11 +8,11 @@ import logger
 class DbManager(ABC, Manager):
     def __init__(self):
         super().__init__()
-        self._db: Optional[Type[AsyncIOMotorDatabase]]
+        self.db = None
 
     @abstractmethod
     @logger.MyLogger(name='log').log_method_info
-    async def add(self):
+    async def add(self, *args, **kwargs):
         pass
 
     @abstractmethod
@@ -34,9 +34,6 @@ class DbManager(ABC, Manager):
     @logger.MyLogger(name='log').log_method_info
     async def find_from_username(self):
         pass
-
-
-
 
 
 
