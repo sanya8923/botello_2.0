@@ -18,6 +18,95 @@ class MongoDbManager(DbManager):
     @logger.MyLogger(name='log').log_method_info
     async def get(self):
         pass
+
+    @logger.MyLogger(name='log').log_method_info
+    async def find_from_id(self):
+        pass
+
+    @logger.MyLogger(name='log').log_method_info
+    async def find_from_username(self):
+        pass
+
+
+class MessageMongoDbManager(MongoDbManager):
+    @logger.MyLogger(name='log').log_method_info
+    async def add(self, *args, **kwargs):
+        pass
+
+    @logger.MyLogger(name='log').log_method_info
+    async def update(self):
+        pass
+
+    @logger.MyLogger(name='log').log_method_info
+    async def get(self):
+        pass
+
+    @logger.MyLogger(name='log').log_method_info
+    async def find_from_id(self):
+        pass
+
+    @logger.MyLogger(name='log').log_method_info
+    async def find_from_username(self):
+        pass
+
+
+class ChatMongoDbManager(MongoDbManager):
+    @logger.MyLogger(name='log').log_method_info
+    async def add(self, *args, **kwargs):
+        pass
+
+    @logger.MyLogger(name='log').log_method_info
+    async def update(self):
+        pass
+
+    @logger.MyLogger(name='log').log_method_info
+    async def get(self):
+        pass
+
+    @logger.MyLogger(name='log').log_method_info
+    async def find_from_id(self):
+        pass
+
+    @logger.MyLogger(name='log').log_method_info
+    async def find_from_username(self):
+        pass
+
+
+class UserMongoDbManager(MongoDbManager):
+    @logger.MyLogger(name='log').log_method_info
+    async def add(self, *args, **kwargs):
+        pass
+
+    @logger.MyLogger(name='log').log_method_info
+    async def update(self):
+        pass
+
+    @logger.MyLogger(name='log').log_method_info
+    async def get(self):
+        pass
+
+    @logger.MyLogger(name='log').log_method_info
+    async def find_from_id(self):
+        pass
+
+    @logger.MyLogger(name='log').log_method_info
+    async def find_from_username(self):
+        pass
+
+
+class GroupMemberRoleMongoDbManager(MongoDbManager):
+
+    @logger.MyLogger(name='log').log_method_info
+    async def add(self, *args, **kwargs):
+        pass
+
+    @logger.MyLogger(name='log').log_method_info
+    async def update(self):
+        pass
+
+    @logger.MyLogger(name='log').log_method_info
+    async def get(self):
+        pass
     
     @logger.MyLogger(name='log').log_method_info
     async def find_from_id(self):
