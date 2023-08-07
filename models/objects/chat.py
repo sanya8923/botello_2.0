@@ -1,5 +1,5 @@
 from models.objects.object import Object
-from typing import Optional, Union
+from typing import Union
 from aiogram.types import Message, CallbackQuery
 
 
@@ -7,10 +7,7 @@ class Chat(Object):
     def __init__(self, update: Union[Message, CallbackQuery]):
         super().__init__(update)
 
-        if isinstance(self.update, Message):
-            self.id: int = self.update.message_id
-        else:
-            self.id: int = self.update.id
+        self.id: int = self.update.chat.id
 
 
 class PrivateChat(Chat):
