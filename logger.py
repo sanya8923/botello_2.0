@@ -14,7 +14,6 @@ class MyLogger:
         self.logger.setLevel(logging.INFO)
         formatter = logging.Formatter(Fore.BLUE + '%(asctime)s: %(message)s')
 
-        # Добавляем обработчик для вывода логов на консоль
         console_handler = logging.StreamHandler()
         console_handler.setFormatter(formatter)
         self.logger.addHandler(console_handler)
