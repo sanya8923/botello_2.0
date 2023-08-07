@@ -1,6 +1,5 @@
 from models.serializer.serializer import Serializer
-from models.objects.user import User, Member, Admin, Creator
-from aiogram.types import Message
+from models.objects.user import User
 from typing import Optional
 import logger
 
