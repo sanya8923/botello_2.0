@@ -19,6 +19,7 @@ class MessageData(UpdateData):
         self.from_chat: Chat = self.update.chat
         self.text: str = self.update.text
         self.entities_data: Optional[List[MessageEntity]] = self.update.entities
+        self.date = self.update.date
 
 
 class MessagePrivateChat(MessageData):
