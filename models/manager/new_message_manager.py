@@ -16,18 +16,20 @@ from models.serializer.update_serializer import MessagePublicChatSerializer
 from models.serializer.group_member_role_serializer import GroupMemberRoleSerializer
 from models.manager.manager import Manager
 
+from models.manager.db_manager.mongo_db_manager import MessageMongoDbManager, UserMongoDbManager, ChatMongoDbManager, \
+    GroupMemberRoleMongoDbManager
+
 init(autoreset=True)
 
 
-class NewMessageManager(ABC, Manager):
-    def __init__(self, message: Message, from_private: bool = False):
+class NewMessageManager(Manager):
+    def __init__(self, message: Message):
         super().__init__(message)
         self._message = message
 
         self.message_data: Optional[MessagePublicChat] = None
         self.user: Union[Creator, Admin, Member, None] = None
         self.group: Optional[Group] = None
-        self.from_private: bool = from_private  # TODO: удали если не придумал
 
         self._message_serializer: Optional[MessagePublicChatSerializer] = None
         self._user_serializer: Union[CreatorSerializer, AdminSerializer, MemberSerializer, None] = None
@@ -39,17 +41,24 @@ class NewMessageManager(ABC, Manager):
         self.user_dict: Optional[dict] = None
         self.group_member_role_dict: Optional[dict] = None
 
-        self.name_col: Optional[str] = None
+        self.name_col: Optional[str] = None  # TODO: удали если не придумал
 
-    @abstractmethod
     @logger.MyLogger(name='log').log_method_info
     async def serialize(self) -> None:
         pass
 
-    @abstractmethod
     @logger.MyLogger(name='log').log_method_info
     async def add_to_db(self):
-        pass
+
+        message_db_manager = MessageMongoDbManager()
+        user_db_manager = UserMongoDbManager()
+        chat_db_manager = ChatMongoDbManager()
+        group_member_role_db_manager = GroupMemberRoleMongoDbManager()
+
+        await message_db_manager.add(self.message_data_dict)
+        await user_db_manager.add(self.user_dict)
+        await chat_db_manager.add(self.group_dict)
+        await group_member_role_db_manager.add(self.group_member_role_dict)
 
     @logger.MyLogger(name='log').log_method_info
     async def _serialize_process(self) -> None:
@@ -65,8 +74,8 @@ class NewMessageManager(ABC, Manager):
 
 
 class NewMessageFromCreatorManager(NewMessageManager):
-    def __init__(self, message: Message, from_private: bool = False):
-        super().__init__(message, from_private)
+    def __init__(self, message: Message):
+        super().__init__(message)
 
         self.message_data = MessagePublicChat(self._message)
         self.user = Creator(self._message)
@@ -81,13 +90,10 @@ class NewMessageFromCreatorManager(NewMessageManager):
 
         await self._serialize_process()
 
-    async def add_to_db(self):  # TODO: add method
-        pass
-
 
 class NewMessageFromAdminManager(NewMessageManager):
-    def __init__(self, message: Message, from_private: bool = False):
-        super().__init__(message, from_private)
+    def __init__(self, message: Message):
+        super().__init__(message)
 
         self.message_data = MessagePublicChat(self._message)
         self.user = Admin(self._message)
@@ -107,8 +113,8 @@ class NewMessageFromAdminManager(NewMessageManager):
 
 
 class NewMessageFromMemberManager(NewMessageManager):
-    def __init__(self, message: Message, from_private: bool = False):
-        super().__init__(message, from_private)
+    def __init__(self, message: Message):
+        super().__init__(message)
 
         self.message_data = MessagePublicChat(self._message)
         self.user = Member(self._message)
@@ -122,6 +128,7 @@ class NewMessageFromMemberManager(NewMessageManager):
         self._group_member_role_serializer = GroupMemberRoleSerializer()
 
         await self._serialize_process()
+        print('won')
 
     async def add_to_db(self):  # TODO: add method
         pass
