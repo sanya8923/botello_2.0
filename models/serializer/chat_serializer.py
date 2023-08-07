@@ -1,6 +1,5 @@
 from models.serializer.serializer import Serializer
 from typing import Optional
-from aiogram.types import Message
 from models.objects.chat import Chat, PublicChat, PrivateChat, Group, SuperGroup
 import logger
 
