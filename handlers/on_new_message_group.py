@@ -1,5 +1,4 @@
 from aiogram import Router
-from colorama import init, Fore
 from aiogram.types import Message
 
 from filters.user_role_filter import UserRoleFilter
@@ -10,7 +9,6 @@ from models.manager.new_message_manager import NewMessageFromCreatorManager, New
 
 router = Router()
 router.message(ChatTypeFilter('group'))
-init(autoreset=True)
 
 
 @router.message(UserRoleFilter(user_role='creator'))
