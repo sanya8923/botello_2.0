@@ -1,11 +1,7 @@
 from models.serializer.serializer import Serializer
-from aiogram.types import Message, CallbackQuery
-from typing import Union, Optional, Type
-from models.objects.update import UpdateData, MessageData, MessagePublicChat, MessagePrivateChat, Callback
-from colorama import init, Fore
+from typing import Optional
+from models.objects.update import UpdateData, MessageData
 import logger
-
-init(autoreset=True)
 
 
 class UpdateSerializer(Serializer):
