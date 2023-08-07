@@ -33,6 +33,7 @@ class MessageDataSerializer(UpdateSerializer):
         self.message_text: Optional[str] = None
         self.from_user: Optional[int] = None
         self.from_chat: Optional[int] = None
+        self.date = None
         self.file: str = 'jsons/message.json'
 
     @logger.MyLogger(name='log').log_method_info
@@ -41,14 +42,16 @@ class MessageDataSerializer(UpdateSerializer):
         self.message_text = update.text
         self.from_user = update.from_user.id
         self.from_chat = update.from_chat.id
+        self.date = update.date
+        date = self.date.strftime("%Y-%m-%d %H:%M:%S %Z")
 
         data = {
             'id': self.id,
             'text': self.message_text,
             'from_user': self.from_user,
-            'from_chat': self.from_chat
+            'from_chat': self.from_chat,
+            'date': date
         }
-
         return data
 
     @logger.MyLogger(name='log').log_method_info
