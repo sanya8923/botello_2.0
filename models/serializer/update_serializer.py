@@ -13,7 +13,7 @@ class UpdateSerializer(Serializer):
         super().__init__()
 
     @logger.MyLogger(name='log').log_method_info
-    async def to_json(self, update: UpdateData) -> dict:  # abstract method
+    async def to_dict(self, update: UpdateData) -> dict:  # abstract method
         pass
 
     @logger.MyLogger(name='log').log_method_info
@@ -36,7 +36,7 @@ class MessageDataSerializer(UpdateSerializer):
         self.file: str = 'jsons/message.json'
 
     @logger.MyLogger(name='log').log_method_info
-    async def to_json(self, update: MessageData) -> dict:
+    async def to_dict(self, update: MessageData) -> dict:
         self.id = update.id
         self.message_text = update.text
         self.from_user = update.from_user.id
@@ -48,8 +48,6 @@ class MessageDataSerializer(UpdateSerializer):
             'from_user': self.from_user,
             'from_chat': self.from_chat
         }
-
-        await self.add_to_json(self.file, data)
 
         return data
 

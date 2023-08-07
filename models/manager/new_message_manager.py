@@ -54,13 +54,13 @@ class NewMessageManager(ABC, Manager):
     @logger.MyLogger(name='log').log_method_info
     async def _serialize_process(self) -> None:
 
-        self.message_data_dict = await self._message_serializer.to_json(
+        self.message_data_dict = await self._message_serializer.to_dict(
             self.message_data)  # return dict (don't use) with message data and save json
-        self.user_dict = await self._user_serializer.to_json(
+        self.user_dict = await self._user_serializer.to_dict(
             self.user)  # return dict (don't use) with member data and save json
-        self.group_dict = await self._group_serializer.to_json(
+        self.group_dict = await self._group_serializer.to_dict(
             self.group)  # return dict (don't use) with group data and save json
-        self.group_member_role_dict = await self._group_member_role_serializer.to_json(
+        self.group_member_role_dict = await self._group_member_role_serializer.to_dict(
             self.message_data)  # return dict (don't use) with group_id, user_id and role and save json
 
 

@@ -16,7 +16,7 @@ class UserSerializer(Serializer):
         self.file: str = 'jsons/user.json'
 
     @logger.MyLogger(name='log').log_method_info
-    async def to_json(self, user: User) -> dict:
+    async def to_dict(self, user: User) -> dict:
 
         self.user_id = user.id
         self.username = user.username
@@ -29,8 +29,6 @@ class UserSerializer(Serializer):
             'first_name': self.user_first_name,
             'last_name': self.user_last_name
         }
-
-        await self.add_to_json(self.file, data)
 
         return data
 

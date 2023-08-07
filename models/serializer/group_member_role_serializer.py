@@ -13,7 +13,7 @@ class GroupMemberRoleSerializer(Serializer):
         self.role: Optional[str] = None
         self.file: str = 'jsons/group_member_role.json'
 
-    async def to_json(self, update_data: MessageData) -> dict:
+    async def to_dict(self, update_data: MessageData) -> dict:
 
         self.user_id = update_data.from_user.id
         self.chat_id = update_data.from_chat.id
@@ -24,8 +24,6 @@ class GroupMemberRoleSerializer(Serializer):
             'chat_id': self.chat_id,
             'role': self.role
         }
-
-        await self.add_to_json(self.file, data)
 
         return data
 

@@ -18,7 +18,7 @@ class Serializer(ABC, Base):
 
     @abstractmethod
     @logger.MyLogger(name='log').log_method_info
-    async def to_json(self, obj: Union[User, Chat, UpdateData]) -> dict:
+    async def to_dict(self, obj: Union[User, Chat, UpdateData]) -> dict:
         pass
 
     @abstractmethod
@@ -32,7 +32,7 @@ class Serializer(ABC, Base):
         pass
 
     @logger.MyLogger(name='log').log_method_info
-    async def add_to_json(self, json_object: str, data: dict):
+    async def add_to_dict(self, json_object: str, data: dict):
 
         with open(f'{json_object}', 'w') as file:
             json.dump(data, file, separators=(',\n', ': '))

@@ -11,7 +11,7 @@ class ChatSerializer(Serializer):
         self.chat_id: Optional[int] = None
 
     @logger.MyLogger(name='log').log_method_info
-    async def to_json(self, chat: Chat) -> dict:
+    async def to_dict(self, chat: Chat) -> dict:
 
         self.chat_id = chat.id
         data = {'id': self.chat_id}
@@ -34,10 +34,9 @@ class PrivateChatSerializer(ChatSerializer):
         self.file: str = 'jsons/private_chat.json'
         self.chat_type: str = 'private'
 
-    async def to_json(self, chat: PrivateChat) -> dict:
-        data = await super().to_json(chat)
+    async def to_dict(self, chat: PrivateChat) -> dict:
+        data = await super().to_dict(chat)
         data['type'] = self.chat_type
-        await self.add_to_json(self.file, data)
 
         return data
 
@@ -57,16 +56,15 @@ class PublicChatSerializer(ChatSerializer):
         self.file: str = 'jsons/public_chat.json'
 
     @logger.MyLogger(name='log').log_method_info
-    async def to_json(self, chat: PublicChat) -> dict:
+    async def to_dict(self, chat: PublicChat) -> dict:
 
-        data = await super().to_json(chat)
+        data = await super().to_dict(chat)
 
         self.username = chat.username
         self.title = chat.title
 
         data['username'] = self.username
         data['title'] = self.title
-        await self.add_to_json(self.file, data)
 
         return data
 
@@ -85,11 +83,10 @@ class GroupSerializer(PublicChatSerializer):
 
         self.chat_type: str = 'group'
 
-    async def to_json(self, group: Group):
+    async def to_dict(self, group: Group):
 
-        data = await super().to_json(group)
+        data = await super().to_dict(group)
         data['type'] = self.chat_type
-        await self.add_to_json(self.file, data)
 
         return data
 
@@ -106,11 +103,10 @@ class SuperGroupSerializer(PublicChatSerializer):
 
         self.chat_type: str = 'supergroup'
 
-    async def to_json(self, group: SuperGroup):
+    async def to_dict(self, group: SuperGroup):
 
-        data = await super().to_json(group)
+        data = await super().to_dict(group)
         data['type'] = self.chat_type
-        await self.add_to_json(self.file, data)
 
         return data
 
