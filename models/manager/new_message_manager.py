@@ -1,9 +1,9 @@
 from aiogram.types import Message
-from colorama import Fore, init
-from abc import ABC, abstractmethod
 from typing import Optional, Union
-
 import logger
+from models.manager.db_manager.mongo_db_manager import MessageMongoDbManager, UserMongoDbManager, ChatMongoDbManager, \
+    GroupMemberRoleMongoDbManager
+
 from models.objects.user import Creator, Admin, Member
 from models.serializer.user_serializer import CreatorSerializer, AdminSerializer, MemberSerializer
 
@@ -15,11 +15,6 @@ from models.serializer.update_serializer import MessagePublicChatSerializer
 
 from models.serializer.group_member_role_serializer import GroupMemberRoleSerializer
 from models.manager.manager import Manager
-
-from models.manager.db_manager.mongo_db_manager import MessageMongoDbManager, UserMongoDbManager, ChatMongoDbManager, \
-    GroupMemberRoleMongoDbManager
-
-init(autoreset=True)
 
 
 class NewMessageManager(Manager):
@@ -48,19 +43,6 @@ class NewMessageManager(Manager):
         pass
 
     @logger.MyLogger(name='log').log_method_info
-    async def add_to_db(self):
-
-        message_db_manager = MessageMongoDbManager()
-        user_db_manager = UserMongoDbManager()
-        chat_db_manager = ChatMongoDbManager()
-        group_member_role_db_manager = GroupMemberRoleMongoDbManager()
-
-        await message_db_manager.add(self.message_data_dict)
-        await user_db_manager.add(self.user_dict)
-        await chat_db_manager.add(self.group_dict)
-        await group_member_role_db_manager.add(self.group_member_role_dict)
-
-    @logger.MyLogger(name='log').log_method_info
     async def _serialize_process(self) -> None:
 
         self.message_data_dict = await self._message_serializer.to_dict(
@@ -71,6 +53,18 @@ class NewMessageManager(Manager):
             self.group)  # return dict (don't use) with group data and save json
         self.group_member_role_dict = await self._group_member_role_serializer.to_dict(
             self.message_data)  # return dict (don't use) with group_id, user_id and role and save json
+
+    @logger.MyLogger(name='log').log_method_info
+    async def add_to_db(self):
+        message_db_manager = MessageMongoDbManager()
+        user_db_manager = UserMongoDbManager()
+        chat_db_manager = ChatMongoDbManager()
+        group_member_role_db_manager = GroupMemberRoleMongoDbManager()
+
+        await message_db_manager.add(self.message_data_dict, self.group.id)
+        await user_db_manager.add(self.user_dict)
+        await chat_db_manager.add(self.group_dict)
+        await group_member_role_db_manager.add(self.group_member_role_dict)
 
 
 class NewMessageFromCreatorManager(NewMessageManager):
